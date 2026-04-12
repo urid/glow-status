@@ -88,7 +88,7 @@ function DropdownItem({
 export default function Filters() {
   const { data } = useData()
   const filtered = useFilteredIssues()
-  const { project, featureArea, statusGroup, search, setProject, setFeatureArea, setStatusGroup, setSearch } = useFiltersStore()
+  const { project, featureArea, statusGroups, search, setProject, setFeatureArea, toggleStatusGroup, clearStatusGroups, setSearch } = useFiltersStore()
 
   const [projOpen, setProjOpen] = useState(false)
   const [areaOpen, setAreaOpen] = useState(false)
@@ -103,7 +103,6 @@ export default function Filters() {
     FEATURE_AREAS.map((a) => [a, allIssues.filter((i) => getFeatureArea(i.summary) === a).length]),
   )
 
-  const sgStyle = statusGroup ? STATUS_GROUP_STYLE[statusGroup] : null
 
   return (
     <div className="flex items-center gap-3 flex-wrap">
@@ -131,12 +130,21 @@ export default function Filters() {
         ))}
       </Dropdown>
 
-      {/* Active status group chip */}
-      {statusGroup && sgStyle && (
-        <span style={{ background: sgStyle.bg, color: sgStyle.text, border: `1px solid ${sgStyle.bdr}`, borderRadius: 20, padding: '4px 10px', fontSize: 11, fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: 4 }}>
-          {statusGroup}
-          <button onClick={() => setStatusGroup(null)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: sgStyle.text, fontSize: 12, padding: 0, marginLeft: 2, lineHeight: 1 }}>✕</button>
-        </span>
+      {/* Active status group chips */}
+      {statusGroups.map((sg) => {
+        const sgStyle = STATUS_GROUP_STYLE[sg]
+        if (!sgStyle) return null
+        return (
+          <span key={sg} style={{ background: sgStyle.bg, color: sgStyle.text, border: `1px solid ${sgStyle.bdr}`, borderRadius: 20, padding: '4px 10px', fontSize: 11, fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: 4 }}>
+            {sg}
+            <button onClick={() => toggleStatusGroup(sg)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: sgStyle.text, fontSize: 12, padding: 0, marginLeft: 2, lineHeight: 1 }}>✕</button>
+          </span>
+        )
+      })}
+      {statusGroups.length > 1 && (
+        <button onClick={clearStatusGroups} style={{ background: 'none', border: '1px solid #e5e7eb', borderRadius: 20, padding: '4px 10px', fontSize: 11, fontWeight: 600, cursor: 'pointer', color: '#6b7280' }}>
+          Clear all
+        </button>
       )}
 
       {/* Search */}

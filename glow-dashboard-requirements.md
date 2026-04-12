@@ -31,7 +31,7 @@ The current prototype is a single React artifact (`dashboard.jsx`, attached). It
   - `C09S3QH0ZQA` — #glow-social (usually active)
   - `C08GZ7W5BV4` — #glow-client-server (usually quiet)
   - `C09GVKW6HH6` — #glow-runway-client-server (usually quiet)
-- Read last 24h of messages from each channel
+- Read last 72h of messages from each channel
 - Extract and classify into unified items with: channel, severity (critical/high/medium/info), title, description, reporter, JIRA key if mentioned, action owner, action item, done status, resolution
 
 **Known data quality issues (learned the hard way)**

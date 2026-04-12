@@ -22,7 +22,7 @@ const GROUP_ICON: Record<StatusGroup, string> = {
 
 export default function SummaryCards() {
   const { data } = useData()
-  const { statusGroup, setStatusGroup } = useFiltersStore()
+  const { statusGroups, toggleStatusGroup } = useFiltersStore()
 
   const counts: Record<StatusGroup, number> = {
     BLOCKED: 0, 'IN DEV': 0, 'IN QA': 0, TODO: 0, DONE: 0,
@@ -35,20 +35,16 @@ export default function SummaryCards() {
     }
   }
 
-  function toggle(group: StatusGroup) {
-    setStatusGroup(statusGroup === group ? null : group)
-  }
-
   return (
     <div className="grid grid-cols-5 gap-3">
       {GROUP_ORDER.map((g) => {
         const st = GROUP_STYLE[g]
-        const isSelected = statusGroup === g
-        const isDimmed = statusGroup !== null && !isSelected
+        const isSelected = statusGroups.includes(g)
+        const isDimmed = statusGroups.length > 0 && !isSelected
         return (
           <div
             key={g}
-            onClick={() => toggle(g)}
+            onClick={() => toggleStatusGroup(g)}
             style={{
               background: st.bg,
               border: `1px solid ${st.bdr}`,

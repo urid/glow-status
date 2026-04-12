@@ -6,7 +6,7 @@ import type { JiraIssue } from '../types'
 
 export function useFilteredIssues(): JiraIssue[] {
   const { data } = useData()
-  const { project, featureArea, statusGroup, search } = useFiltersStore()
+  const { project, featureArea, statusGroups, search } = useFiltersStore()
 
   return useMemo(() => {
     if (!data) return []
@@ -20,8 +20,8 @@ export function useFilteredIssues(): JiraIssue[] {
     if (featureArea) {
       all = all.filter((i) => getFeatureArea(i.summary) === featureArea)
     }
-    if (statusGroup) {
-      all = all.filter((i) => getStatusGroup(i.status) === statusGroup)
+    if (statusGroups.length > 0) {
+      all = all.filter((i) => statusGroups.includes(getStatusGroup(i.status)))
     }
     if (search.trim()) {
       const q = search.trim().toLowerCase()
@@ -31,5 +31,5 @@ export function useFilteredIssues(): JiraIssue[] {
     }
 
     return sortIssues(all)
-  }, [data, project, featureArea, statusGroup, search])
+  }, [data, project, featureArea, statusGroups, search])
 }

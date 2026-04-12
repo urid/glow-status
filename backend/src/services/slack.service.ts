@@ -26,7 +26,7 @@ export interface ChannelMessages {
 
 export async function fetchSlackMessages(token: string): Promise<ChannelMessages[]> {
   const client = new WebClient(token);
-  const oldest = String(Math.floor(Date.now() / 1000) - 86400);
+  const oldest = String(Math.floor(Date.now() / 1000) - 72 * 3600);
   const userCache = new Map<string, string>();
 
   async function resolveUser(userId: string): Promise<string> {

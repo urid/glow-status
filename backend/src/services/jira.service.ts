@@ -9,7 +9,7 @@ const DONE_CLAUSE = "(status != Done OR (status = Done AND resolved >= -7d))";
 const QUERIES: Record<string, string> = {
   GGS: `project = GGS AND issuetype != Epic AND ${DONE_CLAUSE} ORDER BY status ASC, updated DESC`,
   CLPLG: `project = CLPLG AND issuetype != Epic AND ${DONE_CLAUSE} ORDER BY status ASC, updated DESC`,
-  SST2: `project = SST2 AND issuetype != Epic AND (assignee = ${SST2_ACCOUNT_ID} OR watcher = ${SST2_ACCOUNT_ID}) AND ${DONE_CLAUSE} ORDER BY status ASC, updated DESC`,
+  SST2: `project = SST2 AND issuetype != Epic AND (labels = server OR assignee = ${SST2_ACCOUNT_ID}) AND ${DONE_CLAUSE} ORDER BY status ASC, updated DESC`,
 };
 
 export function transformIssue(raw: any): JiraIssue | null {
