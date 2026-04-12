@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(bash \"C:/Users/urida/.claude/plugins/cache/claude-plugins-official/superpowers/5.0.5/skills/brainstorming/scripts/start-server.sh\" --project-dir \"D:/Github/glow-status\")",
+      "Bash(npm install:*)",
+      "Bash(git:*)",
+      "Bash(node:*)",
+      "Bash(npx tsc:*)",
+      "Bash(npx vitest:*)",
+      "Bash(npm show:*)",
+      "Bash(npm test:*)",
+      "Bash(npm run:*)",
+      "Bash(npm create:*)",
+      "Skill(update-config)"
+    ]
+  }
+}
