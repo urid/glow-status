@@ -56,7 +56,7 @@ async function searchJira(
   baseUrl: string, email: string, token: string, jql: string
 ): Promise<JiraIssue[]> {
   const fields = 'summary,status,issuetype,priority,assignee,issuelinks';
-  const url = `${baseUrl}/rest/api/3/search?jql=${encodeURIComponent(jql)}&fields=${fields}&maxResults=100`;
+  const url = `${baseUrl}/rest/api/3/search/jql?jql=${encodeURIComponent(jql)}&fields=${fields}&maxResults=100`;
   const auth = Buffer.from(`${email}:${token}`).toString('base64');
   const res = await fetch(url, { headers: { Authorization: `Basic ${auth}`, Accept: 'application/json' } });
   if (!res.ok) throw new Error(`JIRA search failed: ${res.status} ${await res.text()}`);

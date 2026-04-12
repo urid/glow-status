@@ -1,8 +1,11 @@
 // backend/src/index.ts
-import 'dotenv/config';
-import { DatabaseSync } from 'node:sqlite';
+import dotenv from 'dotenv';
 import path from 'node:path';
 import fs from 'node:fs';
+// Load .env from project root (parent of backend/) when run via npm --prefix
+dotenv.config({ path: path.resolve(process.cwd(), '..', '.env') });
+dotenv.config({ path: path.resolve(process.cwd(), '.env') });
+import { DatabaseSync } from 'node:sqlite';
 import express from 'express';
 import cors from 'cors';
 import { createDbService } from './services/db.service.js';
