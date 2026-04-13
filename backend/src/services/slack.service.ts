@@ -36,7 +36,8 @@ export async function fetchSlackMessages(token: string): Promise<ChannelMessages
       const name = (info.user as any)?.real_name ?? userId;
       userCache.set(userId, name);
       return name;
-    } catch {
+    } catch (err: any) {
+      console.warn(`Could not resolve user ${userId}:`, err?.data ?? err?.message ?? err);
       return userId;
     }
   }
@@ -59,8 +60,8 @@ export async function fetchSlackMessages(token: string): Promise<ChannelMessages
         cursor = resp.response_metadata?.next_cursor ?? undefined;
         if (!resp.has_more) break;
       } while (cursor);
-    } catch {
-      // channel unreadable — return empty
+    } catch (err: any) {
+      console.error(`Slack error on #${ch.name} (${ch.id}):`, err?.data ?? err?.message ?? err);
     }
     return { channelId: ch.id, channelName: ch.name, messages, active: messages.length > 0 };
   }
